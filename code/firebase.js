@@ -4,8 +4,8 @@ import { getDatabase } from 'firebase/database';
 
 // Client-side Firebase configuration - Web SDK format
 const firebaseConfig = {
-  projectId: "ecofish-7d154",
-  databaseURL: "https://ecofish-7d154-default-rtdb.firebaseio.com/"
+  projectId: "ecofishdb",
+  databaseURL: "https://ecofishdb-default-rtdb.firebaseio.com/"
 };
 
 // Initialize Firebase
