@@ -1,18 +1,31 @@
-# ENV files
+# Database files
+code/FinalDB-16.9.json
+code/DB_Details.json
+
+# Firebase credentials and secrets
+**/firebase-config.json
+**/serviceAccountKey.json
+**/*credentials*.json
+**/*secrets*.json
+
+# Environment files
 .env
-.env.*
-!.env.example
-!.env.local.example
+.env.local
+.env.production
+.env.*.local
 
-# Node
+# Node modules and build files
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Build outputs
 dist/
 build/
-.next/
-out/
+.vite/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
