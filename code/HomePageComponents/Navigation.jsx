@@ -6,6 +6,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
     { id: 'home', label: 'Home', icon: Home, color: 'from-blue-600 to-cyan-700' },
     { id: 'ecoreport', label: 'EcoReport', icon: FileText, color: 'from-green-600 to-emerald-700' },
     { id: 'statistics', label: 'Statistics', icon: BarChart3, color: 'from-red-600 to-orange-700' },
+    { id: 'pollutionEstimates', label: 'Pollution Estimates', icon: BarChart3, color: 'from-red-600 to-yellow-500' },
     { id: 'gallery', label: 'Gallery', icon: Image, color: 'from-purple-600 to-pink-700' },
     { id: 'rag', label: 'RAG', icon: Brain, color: 'from-indigo-600 to-purple-700' }
   ];

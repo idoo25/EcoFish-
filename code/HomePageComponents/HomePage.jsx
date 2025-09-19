@@ -85,13 +85,13 @@ const Homepage = () => {
             setCurrentFact={setCurrentFact}
           />
         );
-        
+
       case 'ecoreport':
         return <PollutionFactors />;
-        
-     case 'statistics':
+
+      case 'statistics':
         return <Graphs />;
-        
+
       case 'gallery':
         return (
           <div>
@@ -99,7 +99,16 @@ const Homepage = () => {
             <GalleryCarousel />
           </div>
         );
-        
+
+      case 'pollutionEstimates':
+        return (
+          <div className="text-center animate-fade-in">
+            <h2 className="text-3xl font-bold text-red-700 mb-4">Pollution Estimates</h2>
+            <p className="text-gray-600">Estimated pollution levels and risk factors for Kinneret.</p>
+            {/* Add your pollution estimates visualization or summary here */}
+          </div>
+        );
+
       case 'rag':
         return (
           <div className="text-center animate-pulse">
@@ -107,7 +116,7 @@ const Homepage = () => {
             <p className="text-gray-600">Retrieval-Augmented Generation interface.</p>
           </div>
         );
-        
+
       default:
         return <div>Select a tab</div>;
     }
