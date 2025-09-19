@@ -6,7 +6,9 @@ const photos = [
   'https://www.picshare.co.il/s_pictures/img128006.jpg',
   'https://ynet-pic1.yit.co.il/picserver5/wcm_upload/2024/01/18/ry8IsexDta/8.jpg',
   'https://media.istockphoto.com/id/898542012/photo/the-coast-of-the-sea-of-galilee-near-ein-eyov-waterfall-in-tabgha-israel.jpg?s=612x612&w=0&k=20&c=BVW5gTGip0NUEQGzK_GJlDqk-5cV1uTo_4ER4RSPvXs=',
-  'https://static-cdn.toi-media.com/www/uploads/2017/12/F1700423IH009-e1513122189152.jpg'
+  'https://static-cdn.toi-media.com/www/uploads/2017/12/F1700423IH009-e1513122189152.jpg',
+  'https://ynet-pic1.yit.co.il/picserver6/wcm_upload/2025/08/17/rkHe11hkFxx/eb58b127_761b_4314_a75d_73576b8630ba.jpg',
+  'https://img.haarets.co.il/bs/0000017f-f242-d223-a97f-ffdf3ced0000/50/3e/bea2fb9ccb909b8d4fd936b46401/3732957139.jpg?precrop=2182,1267,x18,y71&width=420&height=244&cmsprod'
 ];
 
 const GalleryCarousel = () => {
@@ -98,7 +100,7 @@ const GalleryCarousel = () => {
         >
           <img
             src={photos[prevIdx]}
-            alt={`תמונה ${prevIdx + 1} של הכנרת`}
+            alt={`Image ${prevIdx + 1} of Kinneret`}
             className="w-full h-full object-cover rounded-2xl shadow-2xl"
             style={{
               boxShadow: '0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)'
@@ -123,7 +125,7 @@ const GalleryCarousel = () => {
           <div className="relative w-full h-full">
             <img
               src={photos[centerIdx]}
-              alt={`תמונה ${centerIdx + 1} של הכנרת`}
+              alt={`Image ${centerIdx + 1} of Kinneret`}
               className="w-full h-full object-cover rounded-3xl shadow-2xl"
               style={{
                 boxShadow: '0 40px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2)'
@@ -151,7 +153,7 @@ const GalleryCarousel = () => {
         >
           <img
             src={photos[nextIdx]}
-            alt={`תמונה ${nextIdx + 1} של הכנרת`}
+            alt={`Image ${nextIdx + 1} of Kinneret`}
             className="w-full h-full object-cover rounded-2xl shadow-2xl"
             style={{
               boxShadow: '0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)'
@@ -160,7 +162,7 @@ const GalleryCarousel = () => {
           <div className="absolute inset-0 bg-gradient-to-l from-purple-500/20 to-transparent rounded-2xl animate-pulse"></div>
         </div>
 
-  {/* Navigation buttons */}
+        {/* Navigation buttons */}
         <button
           onClick={handlePrev}
           disabled={isTransitioning}
@@ -189,7 +191,7 @@ const GalleryCarousel = () => {
           </svg>
         </button>
 
-  {/* Background glow effect */}
+        {/* Background glow effect */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -198,8 +200,6 @@ const GalleryCarousel = () => {
           }}
         ></div>
       </div>
-
-      {/* No info box, no Hebrew text */}
     </div>
   );
 };
