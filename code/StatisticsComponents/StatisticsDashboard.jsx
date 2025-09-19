@@ -18,7 +18,11 @@ import ChemicalChart from './ChemicalChart.jsx';
 import EcoliHeatmap from './EcoliHeatmap.jsx';
 import HeavyMetalsChart from './HeavyMetalsChart.jsx';
 import YearlyTrendsChart from './YearlyTrendsChart.jsx';
+import ChlorophyllVsNitrateScatter from './ChlorophyllVsNitrateScatter.jsx';
+import ChemicalExtremesBar from './ChemicalExtremesBar.jsx';
 import { useEnvironmentalData } from './useEnvironmentalData.js';
+import EcoliBeachLineChart from './EcoliBeachLineChart.jsx';
+import HeavyMetalsThresholdsChart from './HeavyMetalsThresholdsChart.jsx';
 
 // Register Chart.js components
 ChartJS.register(
@@ -37,7 +41,7 @@ ChartJS.register(
 const StatisticsDashboard = () => {
   const { chartData, loading } = useEnvironmentalData();
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [activeChart, setActiveChart] = useState('chemicals'); // 'chemicals' | 'ecoli' | 'metals' | 'yearly'
+  const [activeChart, setActiveChart] = useState('chemicals'); // 'chemicals' | 'ecoli' | 'ecoliFloods' | 'metals' | 'yearly' | 'scatter' | 'extremes'
   
   // Refs for chart cleanup
   const chartRefs = useRef({});
@@ -59,7 +63,7 @@ const StatisticsDashboard = () => {
 
   useEffect(() => {
     if (!hasAnimated && (chartData.chlorophyll.length || chartData.nitrate.length || chartData.beaches.length || chartData.metals.length)) {
-      // mark after first population so next renders skip animation
+    // mark after first population so next renders skip animation
       const t = setTimeout(()=>setHasAnimated(true), 1200); // allow initial chart animation to finish
       return () => clearTimeout(t);
     }
@@ -76,6 +80,8 @@ const StatisticsDashboard = () => {
     );
   }
 
+          {activeChart === 'scatter' && <ChlorophyllVsNitrateScatter />}
+          {activeChart === 'extremes' && <ChemicalExtremesBar />}
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-6">
       <div className="max-w-7xl mx-auto">
@@ -134,10 +140,15 @@ const StatisticsDashboard = () => {
         <div className="mb-6 flex flex-wrap gap-3 justify-center">
           {[
             { id: 'chemicals', label: 'Chemicals' },
-            { id: 'ecoli', label: 'E.coli by Beach' },
+            { id: 'ecoli', label: 'E.coli Heatmap' },
+            { id: 'ecoliBeachLine', label: 'E.coli Beach Line' },
             { id: 'metals', label: 'Heavy Metals by Depth' },
-            { id: 'yearly', label: 'Yearly Trends' }
+            { id: 'metalsThresholds', label: 'Heavy Metals Thresholds' },
+            { id: 'yearly', label: 'Yearly Trends' },
+            { id: 'scatter', label: 'Chlorophyll vs Nitrate' },
+            { id: 'extremes', label: 'Chemical Extremes' }
           ].map((tab) => (
+
             <button
               key={tab.id}
               onClick={() => setActiveChart(tab.id)}
@@ -150,6 +161,9 @@ const StatisticsDashboard = () => {
 
         {/* Single Chart Container */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
+          {activeChart === 'metalsThresholds' && (
+            <HeavyMetalsThresholdsChart metalsThresholds={chartData.metalsThresholds || []} />
+          )}
           {activeChart === 'chemicals' && (
             <ChemicalChart chartData={chartData} hasAnimated={hasAnimated} />
           )}
@@ -158,12 +172,27 @@ const StatisticsDashboard = () => {
             <YearlyTrendsChart chartData={chartData} hasAnimated={hasAnimated} />
           )}
 
+
           {activeChart === 'ecoli' && (
             <EcoliHeatmap chartData={chartData} />
           )}
 
+          {activeChart === 'ecoliBeachLine' && (
+            <EcoliBeachLineChart beaches={chartData.beaches || []} />
+          )}
+
+
           {activeChart === 'metals' && (
             <HeavyMetalsChart chartData={chartData} hasAnimated={hasAnimated} />
+          )}
+
+
+          {activeChart === 'scatter' && (
+            <ChlorophyllVsNitrateScatter chartData={chartData} />
+          )}
+
+          {activeChart === 'extremes' && (
+            <ChemicalExtremesBar chartData={chartData} />
           )}
         </div>
 

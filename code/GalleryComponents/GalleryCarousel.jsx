@@ -106,7 +106,7 @@ const GalleryCarousel = () => {
               boxShadow: '0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-transparent rounded-2xl animate-pulse"></div>
+          {/* Removed purple gradient overlay */}
         </div>
 
         {/* Center image (large) */}
@@ -132,7 +132,7 @@ const GalleryCarousel = () => {
               }}
             />
             {/* Cool glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/40 via-transparent to-purple-500/30 rounded-3xl"></div>
+            {/* Removed purple gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5 rounded-3xl"></div>
           </div>
         </div>
@@ -159,7 +159,7 @@ const GalleryCarousel = () => {
               boxShadow: '0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-purple-500/20 to-transparent rounded-2xl animate-pulse"></div>
+          {/* Removed purple gradient overlay */}
         </div>
 
         {/* Navigation buttons */}
@@ -192,13 +192,7 @@ const GalleryCarousel = () => {
         </button>
 
         {/* Background glow effect */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `linear-gradient(90deg, rgba(59,130,246,0.08) 0%, rgba(147,51,234,0.08) 100%)`,
-            zIndex: -1
-          }}
-        ></div>
+        {/* Removed purple background glow effect */}
       </div>
     </div>
   );

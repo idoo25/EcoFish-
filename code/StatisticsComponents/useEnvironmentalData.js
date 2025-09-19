@@ -86,19 +86,23 @@ export const useEnvironmentalData = () => {
 
   // Process and transform data
   const chartData = useMemo(() => {
-    // Defensive helpers
-    const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
-    const chlorophyll = [];
-    const nitrate = [];
-    const beachesMap = new Map();
-    const metalsMap = new Map();
-    const metalFields = ['Al_µg_L','Cd_µg_L','Cu_µg_L','Fe_µg_L','Hg_µg_L','Mn_µg_L','Pb_µg_L','Zn_µg_L'];
+  // Defensive helpers
+  const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
+  const chlorophyll = [];
+  const nitrate = [];
+  const beachesMap = new Map();
+  const metalsMap = new Map();
+  const metalFields = ['Al_µg_L','Cd_µg_L','Cu_µg_L','Fe_µg_L','Hg_µg_L','Mn_µg_L','Pb_µg_L','Zn_µg_L'];
 
-    // Also collect per-depth per-metal lists
-    const perDepthMetal = {}; // { metalName: { depth: number -> values:number[] } }
-    
-    // New: collect data by year
-    const yearlyData = {}; // { year: { chlorophyll: [], nitrate: [], ecoli: [] } }
+  // Also collect per-depth per-metal lists
+  const perDepthMetal = {}; // { metalName: { depth: number -> values:number[] } }
+
+  // New: collect data by year
+  const yearlyData = {}; // { year: { chlorophyll: [], nitrate: [], ecoli: [] } }
+
+  // Arrays for creative E.coli graphs
+  const ecoliFloods = [];
+  const ecoliWeatherData = [];
 
     // ---- Chemicals_Height traversal ----
     Object.keys(chemicalData || {}).forEach(year => {
@@ -155,15 +159,28 @@ export const useEnvironmentalData = () => {
           samplesArr.forEach(sample => {
             if (!isObject(sample)) return;
             const beach = sample.beach_name || sample.beach || 'Unknown';
+            // E.coli value
             if (sample.Ecoli != null && !isNaN(sample.Ecoli)) {
               const value = Number(sample.Ecoli);
               const entry = beachesMap.get(beach) || { values: [], count: 0 };
               entry.values.push(value);
               entry.count += 1;
               beachesMap.set(beach, entry);
-              
               // Add to yearly data
               yearlyData[year].ecoli.push(value);
+              // E.coli Floods chart: needs date, ecoli, rainfall
+              ecoliFloods.push({
+                date: sample.date || `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(dayKey).padStart(2,'0')}`,
+                ecoli: value,
+                rainfall: sample.rainfall != null ? Number(sample.rainfall) : null
+              });
+              // E.coli Weather chart: needs date, ecoli, rainfall, temperature
+              ecoliWeatherData.push({
+                date: sample.date || `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(dayKey).padStart(2,'0')}`,
+                ecoli: value,
+                rainfall: sample.rainfall != null ? Number(sample.rainfall) : null,
+                temperature: sample.temperature != null ? Number(sample.temperature) : null
+              });
             }
           });
         });
@@ -232,11 +249,33 @@ export const useEnvironmentalData = () => {
 
     console.log('[chartData] counts', { chlorophyll: chlorophyll.length, nitrate: nitrate.length, beaches: beaches.length, metals: metals.length, yearlyAverages: yearlyAverages.length });
 
-    return { chlorophyll, nitrate, beaches, metals, metalList, perDepthMetal, yearlyAverages };
+  return { chlorophyll, nitrate, beaches, metals, metalList, perDepthMetal, yearlyAverages, ecoliFloods };
   }, [chemicalData, ecofloodsData, heavyMetalsData]);
 
+  // Safety thresholds for heavy metals (µg/L)
+  const metalsThresholds = [
+    { metal: 'Cd', label: 'Cadmium', threshold: 0.005 },
+    { metal: 'Pb', label: 'Lead', threshold: 0.01 },
+    { metal: 'Hg', label: 'Mercury', threshold: 1 },
+    { metal: 'Cu', label: 'Copper', threshold: 1 },
+    { metal: 'Zn', label: 'Zinc', threshold: 10 },
+    { metal: 'Fe', label: 'Iron', threshold: 300 },
+    { metal: 'Mn', label: 'Manganese', threshold: 50 },
+    { metal: 'Al', label: 'Aluminum', threshold: 200 }
+  ].map(item => {
+    // Find measured average value for each metal
+    const found = chartData.metals?.find(m => m.metal === item.metal);
+    return {
+      ...item,
+      value: found ? found.average : 0
+    };
+  });
+
   return {
-    chartData,
+    chartData: {
+      ...chartData,
+      metalsThresholds
+    },
     loading
   };
 };
