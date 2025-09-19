@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import HomeContent from './components/HomeContent';
+import PollutionFactors from './PollutionFactors/PollutionFactors';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -84,12 +85,7 @@ const Homepage = () => {
         );
         
       case 'ecoreport':
-        return (
-          <div className="text-center animate-pulse">
-            <h2 className="text-3xl font-bold text-green-700 mb-4">EcoReport</h2>
-            <p className="text-gray-600">Environmental reports and sustainability data.</p>
-          </div>
-        );
+        return <PollutionFactors />;
         
       case 'statistics':
         return (
