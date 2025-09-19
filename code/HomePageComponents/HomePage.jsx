@@ -3,7 +3,7 @@ import Header from './Header';
 import Navigation from './Navigation';
 import HomeContent from './HomeContent';
 import Graphs from '../StatisticsComponents/Graphs.jsx';
-import PollutionFactors from '../EcoReportComponents/PollutionFactors';
+import PollutionFactors from '../EcoReportComponents/PollutionFactors.jsx';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');

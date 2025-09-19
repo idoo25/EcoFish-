@@ -3,6 +3,31 @@ import { db } from '../firebase.js';
 import { ref, get } from 'firebase/database';
 
 class AIService {
+  // Get SerpAPI key from Firebase
+  async getSerpApiKey() {
+    if (this.serpApiKey) return this.serpApiKey;
+    const apiKeyRef = ref(db, 'SERP_API');
+    const snapshot = await get(apiKeyRef);
+    if (snapshot.exists()) {
+      this.serpApiKey = snapshot.val();
+      return this.serpApiKey;
+    } else {
+      throw new Error('SerpAPI key not found in Firebase');
+    }
+  }
+
+  async getGeminiApiKey() {
+    if (this.apiKey) return this.apiKey;
+    const apiKeyRef = ref(db, 'GEMINI_API_KEY');
+    const snapshot = await get(apiKeyRef);
+    if (snapshot.exists()) {
+      this.apiKey = snapshot.val();
+      return this.apiKey;
+    } else {
+      throw new Error('Gemini API key not found in Firebase');
+    }
+  }
+
   constructor() {
     this.apiKey = null;
     this.baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
@@ -174,30 +199,9 @@ class AIService {
     };
   }
 
-  async getApiKey() {
-    if (this.apiKey) {
-      console.log('Using cached API key:', this.apiKey);
-      return this.apiKey;
-    }
 
-    try {
-      const apiKeyRef = ref(db, 'API_Key/api_key');
-      const snapshot = await get(apiKeyRef);
-      
-      if (snapshot.exists()) {
-        this.apiKey = snapshot.val();
-        console.log('API key retrieved from Firebase:', this.apiKey);
-        console.log('API key length:', this.apiKey ? this.apiKey.length : 0);
-        console.log('API key starts with:', this.apiKey ? this.apiKey.substring(0, 10) + '...' : 'null');
-        return this.apiKey;
-      } else {
-        console.error('API key not found in Firebase database at path: API_Key/api_key');
-        throw new Error('API key not found in Firebase database');
-      }
-    } catch (error) {
-      console.error('Failed to fetch API key from Firebase:', error);
-      throw new Error('Unable to retrieve API key from Firebase');
-    }
+  async getApiKey() {
+    return this.getGeminiApiKey();
   }
 
   async generatePollutionFactorData(factorType) {
@@ -233,7 +237,7 @@ class AIService {
 
     const prompt = `You are EcoFish AI, an expert water quality monitoring assistant specializing in the Kinneret (Sea of Galilee) ecosystem. 
     ${contextInfo}
-    
+    Please answer directly and concisely.
     User question: "${userQuestion}"
     
     Provide helpful, accurate responses about:
@@ -290,7 +294,10 @@ class AIService {
         throw new Error('Invalid response structure from AI API');
       }
       
-      return data.candidates[0].content.parts[0].text;
+      const textResponse = data.candidates[0].content.parts[0].text;
+      
+      // Return only text response, no videos
+      return textResponse;
     } catch (error) {
       console.error('AI chat error details:', error);
       

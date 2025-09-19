@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import HomeContent from './components/HomeContent';
-import PollutionFactors from './EcoReportComponents/PollutionFactors';
+import PollutionFactors from './PollutionFactors/PollutionFactors';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');
