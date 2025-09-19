@@ -3,6 +3,7 @@ import Header from './Header';
 import Navigation from './Navigation';
 import HomeContent from './HomeContent';
 import Graphs from '../StatisticsComponents/Graphs.jsx';
+import PollutionFactors from '../EcoReportComponents/PollutionFactors';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -85,12 +86,7 @@ const Homepage = () => {
         );
         
       case 'ecoreport':
-        return (
-          <div className="text-center animate-pulse">
-            <h2 className="text-3xl font-bold text-green-700 mb-4">EcoReport</h2>
-            <p className="text-gray-600">Environmental reports and sustainability data.</p>
-          </div>
-        );
+        return <PollutionFactors />;
         
      case 'statistics':
         return <Graphs />;
