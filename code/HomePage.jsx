@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import HomeContent from './components/HomeContent';
 import PollutionFactors from './PollutionFactors/PollutionFactors';
+import GalleryCarousel from './GalleryComponents/GalleryCarousel';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -97,9 +98,9 @@ const Homepage = () => {
         
       case 'gallery':
         return (
-          <div className="text-center animate-pulse">
-            <h2 className="text-3xl font-bold text-purple-700 mb-4">Gallery</h2>
-            <p className="text-gray-600">Image and media gallery.</p>
+          <div>
+            <h2 className="text-3xl font-bold text-purple-700 mb-4 text-center">Gallery</h2>
+            <GalleryCarousel />
           </div>
         );
         

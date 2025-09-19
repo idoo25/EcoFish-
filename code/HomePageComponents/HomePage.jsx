@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import HomeContent from './HomeContent';
 import Graphs from '../StatisticsComponents/Graphs.jsx';
 import PollutionFactors from '../EcoReportComponents/PollutionFactors.jsx';
+import GalleryCarousel from '../GalleryComponents/GalleryCarousel.jsx';
 
 const Homepage = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -93,9 +94,9 @@ const Homepage = () => {
         
       case 'gallery':
         return (
-          <div className="text-center animate-pulse">
-            <h2 className="text-3xl font-bold text-purple-700 mb-4">Gallery</h2>
-            <p className="text-gray-600">Image and media gallery.</p>
+          <div>
+            <h2 className="text-3xl font-bold text-purple-700 mb-4 text-center">Gallery</h2>
+            <GalleryCarousel />
           </div>
         );
         
