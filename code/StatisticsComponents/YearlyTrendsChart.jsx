@@ -46,7 +46,12 @@ const YearlyTrendsChart = ({ chartData, hasAnimated }) => {
             options={{
               responsive: true,
               maintainAspectRatio: false,
-              animation: hasAnimated ? false : { duration: 800 },
+              animation: {
+                duration: 1200,
+                easing: 'easeOutQuart',
+                animateScale: true,
+                animateRotate: true
+              },
               interaction: {
                 mode: 'index',
                 intersect: false,
@@ -65,8 +70,13 @@ const YearlyTrendsChart = ({ chartData, hasAnimated }) => {
                       'Annual trends show average environmental indicators over the years. This helps identify long-term patterns in water quality changes and environmental health.'
                     ]
                   }
+                },
+                zoom: {
+                  pan: { enabled: true, mode: 'xy' },
+                  zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'xy' }
                 }
               },
+              hover: { mode: 'nearest', intersect: false },
               scales: {
                 x: {
                   title: {

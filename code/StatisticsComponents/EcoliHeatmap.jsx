@@ -95,8 +95,8 @@ const EcoliHeatmap = ({ chartData }) => {
                       return (
                         <div
                           key={index}
-                          className="rounded-lg p-3 border border-gray-200 hover:scale-105 transition-transform cursor-pointer shadow-sm flex flex-col justify-center items-center min-h-[80px] aspect-square"
-                          style={{ backgroundColor }}
+                          className="rounded-lg p-3 border border-gray-200 cursor-pointer shadow-sm flex flex-col justify-center items-center min-h-[80px] aspect-square transition-all duration-500 hover:scale-110 hover:shadow-lg animate-heatmap-pop"
+                          style={{ backgroundColor, animationDelay: `${index * 40}ms` }}
                           title={`${beach.beach}: ${beach.average.toFixed(0)} CFU/100mL - ${riskLevel}`}
                         >
                           <div className="text-center w-full h-full flex flex-col justify-center overflow-hidden">
@@ -145,5 +145,19 @@ const EcoliHeatmap = ({ chartData }) => {
     </div>
   );
 };
+
+// Add keyframes for pop-in animation
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes heatmap-pop {
+  0% { transform: scale(0.7); opacity: 0.2; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-heatmap-pop {
+  animation: heatmap-pop 0.7s cubic-bezier(.4,0,.2,1);
+}
+`;
+document.head.appendChild(style);
 
 export default EcoliHeatmap;

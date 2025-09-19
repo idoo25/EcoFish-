@@ -28,7 +28,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
                 }`}
               >
                 {isActive && (
-                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${tab.color} animate-pulse`}></div>
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${tab.color} animate-tabpop`}></div>
                 )}
                 {!isActive && (
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
@@ -45,5 +45,19 @@ const Navigation = ({ activeTab, setActiveTab }) => {
     </nav>
   );
 };
+
+// Add custom animation for tab pop
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes tabpop {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-tabpop {
+  animation: tabpop 0.5s cubic-bezier(.4,0,.2,1);
+}
+`;
+document.head.appendChild(style);
 
 export default Navigation;
