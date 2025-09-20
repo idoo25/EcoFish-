@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, FileText, BarChart3, Image, Brain } from 'lucide-react';
+import { Home, FileText, BarChart3, Image, Brain, Download } from 'lucide-react';
 
 const Navigation = ({ activeTab, setActiveTab }) => {
   const tabs = [
@@ -8,13 +8,13 @@ const Navigation = ({ activeTab, setActiveTab }) => {
     { id: 'statistics', label: 'Statistics', icon: BarChart3, color: 'from-red-600 to-orange-700' },
     { id: 'pollutionEstimates', label: 'Pollution Estimates', icon: BarChart3, color: 'from-red-600 to-yellow-500' },
     { id: 'gallery', label: 'Gallery', icon: Image, color: 'from-purple-600 to-pink-700' },
-    { id: 'rag', label: 'RAG', icon: Brain, color: 'from-indigo-600 to-purple-700' }
+    { id: 'download', label: 'Download Data', icon: Download, color: 'from-gray-600 to-blue-600' },
   ];
 
   return (
     <nav className="bg-white/90 backdrop-blur-lg border-b border-blue-200/30 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex space-x-2 overflow-x-auto">
+  <div className="w-full max-w-screen-xl mx-auto px-4">
+  <div className="flex flex-wrap space-x-2 overflow-x-visible">
           {tabs.map((tab) => {
             const IconComponent = tab.icon;
             const isActive = activeTab === tab.id;
