@@ -16,14 +16,26 @@ const ChemicalChart = ({ chartData, hasAnimated }) => {
 
   // Memoized chart data for monthly trends
   const chartConfig = useMemo(() => {
-    const raw = selectedChemical === 'chlorophyll' ? chartData.chlorophyll : chartData.nitrate;
+    let raw, label, color;
+    if (selectedChemical === 'chlorophyll') {
+      raw = chartData.chlorophyll;
+      label = 'Chlorophyll-a';
+      color = '#10b981';
+    } else if (selectedChemical === 'nitrate') {
+      raw = chartData.nitrate;
+      label = 'Nitrate';
+      color = '#3b82f6';
+    } else if (selectedChemical === 'nitrite') {
+      raw = chartData.nitrite || [];
+      label = 'Nitrite';
+      color = '#fbbf24';
+    }
     const monthlyAverages = getMonthlyAverages(raw);
     const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const color = selectedChemical === 'chlorophyll' ? '#10b981' : '#3b82f6';
     return {
       labels,
       datasets: [{
-        label: `${selectedChemical === 'chlorophyll' ? 'Chlorophyll-a' : 'Nitrate'} Monthly Trend`,
+        label: `${label} Monthly Trend`,
         data: monthlyAverages,
         borderColor: color,
         backgroundColor: color + '22',
@@ -49,10 +61,12 @@ const ChemicalChart = ({ chartData, hasAnimated }) => {
           >
             <option value="chlorophyll">Chlorophyll-a</option>
             <option value="nitrate">Nitrate</option>
+            <option value="nitrite">Nitrite</option>
           </select>
         </div>
         {((selectedChemical === 'chlorophyll' && chartData.chlorophyll.length) ||
-          (selectedChemical === 'nitrate' && chartData.nitrate.length)) ? (
+          (selectedChemical === 'nitrate' && chartData.nitrate.length) ||
+          (selectedChemical === 'nitrite' && chartData.nitrite && chartData.nitrite.length)) ? (
           <>
             <Line
               key={`chemicals-${selectedChemical}`}
@@ -118,16 +132,21 @@ const ChemicalChart = ({ chartData, hasAnimated }) => {
                   <b>What is measured?</b> Chlorophyll‑a is a marker for algal biomass and blooms. High values indicate nutrient enrichment (eutrophication) and reduced water clarity.<br/>
                   <b>Trends:</b> An increase over the months may indicate seasonal blooms or pollution, while a decrease suggests cleaner water.
                 </>
-              ) : (
+              ) : selectedChemical === 'nitrate' ? (
                 <>
                   <b>What is measured?</b> Nitrate (mg/L) is a pollutant often originating from agricultural fertilizers or sewage. High values indicate nutrient pollution in the water.<br/>
                   <b>Trends:</b> An increase over the months may indicate ongoing pollution, while a decrease suggests improving water quality.
+                </>
+              ) : (
+                <>
+                  <b>What is measured?</b> Nitrite (mg/L) is a pollutant often originating from sewage or industrial waste. High values can indicate contamination and pose health risks.<br/>
+                  <b>Trends:</b> An increase over the months may indicate new pollution sources, while a decrease suggests improving water quality.
                 </>
               )}
             </div>
           </>
         ) : (
-          <p className="text-center text-gray-500">No {selectedChemical === 'chlorophyll' ? 'chlorophyll' : 'nitrate'} data available</p>
+          <p className="text-center text-gray-500">No {selectedChemical === 'chlorophyll' ? 'chlorophyll' : selectedChemical === 'nitrate' ? 'nitrate' : 'nitrite'} data available</p>
         )}
       </div>
   );

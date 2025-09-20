@@ -18,11 +18,12 @@ import ChemicalChart from './ChemicalChart.jsx';
 import EcoliHeatmap from './EcoliHeatmap.jsx';
 import HeavyMetalsChart from './HeavyMetalsChart.jsx';
 import YearlyTrendsChart from './YearlyTrendsChart.jsx';
-import ChlorophyllVsNitrateScatter from './ChlorophyllVsNitrateScatter.jsx';
+import CorrelationScatter from './CorrelationScatter.jsx';
 import ChemicalExtremesBar from './ChemicalExtremesBar.jsx';
 import { useEnvironmentalData } from './useEnvironmentalData.js';
 import EcoliBeachLineChart from './EcoliBeachLineChart.jsx';
 import HeavyMetalsThresholdsChart from './HeavyMetalsThresholdsChart.jsx';
+import EcoliFloodYearChart from './EcoliFloodYearChart.jsx';
 
 // Register Chart.js components
 ChartJS.register(
@@ -41,7 +42,7 @@ ChartJS.register(
 const StatisticsDashboard = () => {
   const { chartData, loading } = useEnvironmentalData();
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [activeChart, setActiveChart] = useState('chemicals'); // 'chemicals' | 'ecoli' | 'ecoliFloods' | 'metals' | 'yearly' | 'scatter' | 'extremes'
+  const [activeChart, setActiveChart] = useState('chemicals'); // 'chemicals' | 'ecoli' | 'ecoliFloods' | 'metals' | 'yearly' | 'scatter' | 'extremes' | 'ecoliFloodYear'
   
   // Refs for chart cleanup
   const chartRefs = useRef({});
@@ -80,7 +81,7 @@ const StatisticsDashboard = () => {
     );
   }
 
-          {activeChart === 'scatter' && <ChlorophyllVsNitrateScatter />}
+          {activeChart === 'scatter' && <CorrelationScatter />}
           {activeChart === 'extremes' && <ChemicalExtremesBar />}
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-6">
@@ -138,14 +139,15 @@ const StatisticsDashboard = () => {
 
         {/* Tabs */}
         <div className="mb-6 flex flex-wrap gap-3 justify-center">
-          {[
+          {[ 
             { id: 'chemicals', label: 'Chemicals' },
             { id: 'ecoli', label: 'E.coli Heatmap' },
             { id: 'ecoliBeachLine', label: 'E.coli Beach Line' },
+            { id: 'ecoliFloodYear', label: 'E.coli vs Floods by Year' },
             { id: 'metals', label: 'Heavy Metals by Depth' },
             { id: 'metalsThresholds', label: 'Heavy Metals Thresholds' },
             { id: 'yearly', label: 'Yearly Trends' },
-            { id: 'scatter', label: 'Chlorophyll vs Nitrate' },
+            { id: 'scatter', label: 'Correlation Scatter' },
             { id: 'extremes', label: 'Chemical Extremes' }
           ].map((tab) => (
 
@@ -172,7 +174,6 @@ const StatisticsDashboard = () => {
             <YearlyTrendsChart chartData={chartData} hasAnimated={hasAnimated} />
           )}
 
-
           {activeChart === 'ecoli' && (
             <EcoliHeatmap chartData={chartData} />
           )}
@@ -181,14 +182,16 @@ const StatisticsDashboard = () => {
             <EcoliBeachLineChart beaches={chartData.beaches || []} />
           )}
 
+          {activeChart === 'ecoliFloodYear' && (
+            <EcoliFloodYearChart beaches={chartData.beaches || []} />
+          )}
 
           {activeChart === 'metals' && (
             <HeavyMetalsChart chartData={chartData} hasAnimated={hasAnimated} />
           )}
 
-
           {activeChart === 'scatter' && (
-            <ChlorophyllVsNitrateScatter chartData={chartData} />
+            <CorrelationScatter chartData={chartData} />
           )}
 
           {activeChart === 'extremes' && (

@@ -90,6 +90,7 @@ export const useEnvironmentalData = () => {
   const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
   const chlorophyll = [];
   const nitrate = [];
+  const nitrite = [];
   const beachesMap = new Map();
   const metalsMap = new Map();
   const metalFields = ['Al_µg_L','Cd_µg_L','Cu_µg_L','Fe_µg_L','Hg_µg_L','Mn_µg_L','Pb_µg_L','Zn_µg_L'];
@@ -132,6 +133,10 @@ export const useEnvironmentalData = () => {
               const value = Number(sample.avg_nitrate);
               nitrate.push({ date, value, year });
               yearlyData[year].nitrate.push(value);
+            }
+            if (sample.avg_nitrit != null && !isNaN(sample.avg_nitrit)) {
+              const value = Number(sample.avg_nitrit);
+              nitrite.push({ date, value, year });
             }
           });
         });
@@ -249,7 +254,7 @@ export const useEnvironmentalData = () => {
 
     console.log('[chartData] counts', { chlorophyll: chlorophyll.length, nitrate: nitrate.length, beaches: beaches.length, metals: metals.length, yearlyAverages: yearlyAverages.length });
 
-  return { chlorophyll, nitrate, beaches, metals, metalList, perDepthMetal, yearlyAverages, ecoliFloods };
+  return { chlorophyll, nitrate, nitrite, beaches, metals, metalList, perDepthMetal, yearlyAverages, ecoliFloods };
   }, [chemicalData, ecofloodsData, heavyMetalsData]);
 
   // Safety thresholds for heavy metals (µg/L)
