@@ -88,7 +88,7 @@ const StatisticsDashboard = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-blue-800 mb-3">🌊 EcoFish Analytics</h1>
+          <h1 className="text-5xl font-bold text-blue-800 mb-3"> EcoFish Analytics🌊</h1>
           <p className="text-xl text-gray-600">Environmental Data Visualization Dashboard</p>
           <div className="w-60 md:w-100 h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-green-500 mx-auto mt-4 rounded-full shadow-sm"></div>
         </div>
