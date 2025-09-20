@@ -17,7 +17,7 @@ const PollutionFactorDetail = ({ selectedFactor, onClose }) => {
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-8 gap-4">
           <div className="flex-1 min-w-0">
-            <h2 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extrabold bg-gradient-to-r ${selectedFactor.color} bg-clip-text text-transparent tracking-tight leading-tight break-words`}>
+            <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold bg-gradient-to-r ${selectedFactor.color} bg-clip-text text-transparent tracking-tight leading-tight break-words`}>
               {selectedFactor.cleanTitle}
             </h2>
           </div>
@@ -32,7 +32,7 @@ const PollutionFactorDetail = ({ selectedFactor, onClose }) => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {selectedFactor.loading ? (
             <div className="col-span-2 text-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>

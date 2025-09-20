@@ -128,8 +128,8 @@ const Homepage = () => {
       <Header />
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
       
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-8">
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/30 transition-all duration-700">
+      <main className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
+        <div className="bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 border border-white/30 transition-all duration-700">
           {renderTabContent()}
         </div>
       </main>

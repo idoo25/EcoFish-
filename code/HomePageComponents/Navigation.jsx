@@ -13,8 +13,8 @@ const Navigation = ({ activeTab, setActiveTab }) => {
 
   return (
     <nav className="bg-white/90 backdrop-blur-lg border-b border-blue-200/30 sticky top-0 z-50">
-  <div className="w-full max-w-screen-xl mx-auto px-4">
-  <div className="flex flex-wrap space-x-2 overflow-x-visible">
+      <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4">
+        <div className="flex overflow-x-auto scrollbar-hide space-x-1 sm:space-x-2 py-2">
           {tabs.map((tab) => {
             const IconComponent = tab.icon;
             const isActive = activeTab === tab.id;
@@ -22,7 +22,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group flex items-center space-x-3 py-4 px-6 font-medium text-sm transition-all duration-300 transform hover:scale-105 relative ${
+                className={`group flex items-center space-x-1 sm:space-x-3 py-2 sm:py-4 px-3 sm:px-6 font-medium text-xs sm:text-sm transition-all duration-300 transform hover:scale-105 relative whitespace-nowrap min-w-0 ${
                   isActive
                     ? 'text-white'
                     : 'text-gray-600 hover:text-gray-800'
@@ -34,9 +34,10 @@ const Navigation = ({ activeTab, setActiveTab }) => {
                 {!isActive && (
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                 )}
-                <div className="relative z-10 flex items-center space-x-3">
-                  <span className="whitespace-nowrap">{tab.label}</span>
-                  <IconComponent className={`w-5 h-5 transition-all duration-300 ${isActive ? 'animate-bounce' : 'group-hover:rotate-12'}`} />
+                <div className="relative z-10 flex items-center space-x-1 sm:space-x-3">
+                  <span className="hidden sm:inline whitespace-nowrap">{tab.label}</span>
+                  <span className="sm:hidden text-xs">{tab.label.split(' ')[0]}</span>
+                  <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${isActive ? 'animate-bounce' : 'group-hover:rotate-12'}`} />
                 </div>
               </button>
             );
